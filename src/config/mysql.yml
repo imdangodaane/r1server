@@ -1,0 +1,19 @@
+DATABASE:
+  NAME: mysql
+  TYPE: mysql
+  HOST: localhost
+  PORT: 3306
+  USERNAME: admin
+  PASSWORD: '123456'
+  DATABASE: ragnarok
+  CACHE: true
+  SYNCHRONIZE: false
+  LOGGING: false
+  CLI:
+    MIGRATION_DIR: migration
+  entities:
+    - src/models/mysql/**/*.ts
+  migrations:
+    - migration/mysql/**/*.ts
+  subscribers:
+    - src/subscribers/mysql/**/*.ts
