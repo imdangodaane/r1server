@@ -14,7 +14,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _createUserRoute() {
     return {
       method: 'POST',
-      path: '/users',
+      path: '/v1/users',
       handler: this.usersCtrler.createUser(),
     };
   }
@@ -22,7 +22,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _retrieveUsersRoute() {
     return {
       method: 'GET',
-      path: '/users',
+      path: '/v1/users',
       handler: this.usersCtrler.retrieveUsers(),
     };
   }
@@ -30,7 +30,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _retrieveUserRoute() {
     return {
       method: 'GET',
-      path: '/user/{id}',
+      path: '/v1/user/{id}',
       handler: this.usersCtrler.retrieveUser(),
     };
   }
@@ -38,7 +38,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _modifyUserRoute() {
     return {
       method: 'PUT',
-      path: '/user/{id}',
+      path: '/v1/user/{id}',
       handler: this.usersCtrler.modifyUser(),
     };
   }
@@ -46,7 +46,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _removeUserRoute() {
     return {
       method: 'DELETE',
-      path: '/user/{id}',
+      path: '/v1/user/{id}',
       handler: this.usersCtrler.removeUser(),
     };
   }

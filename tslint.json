@@ -8,6 +8,11 @@
     "function-name": [
       false
     ],
-    "max-line-length": false
+    "max-line-length": false,
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape"
+    ]
   }
 }

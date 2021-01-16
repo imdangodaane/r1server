@@ -1,7 +1,9 @@
 import { HandlerDecorations, Lifecycle, Request, ResponseToolkit } from '@hapi/hapi';
 import { inject, injectable } from 'inversify';
+import { Connection, Repository } from 'typeorm';
 import { IDENTIFIER } from '../../../../helpers/utilites/identifier';
 import { IUsersBusinessLogic } from './Users.BusinessLogic';
+import { Login } from '../../../../models/mysql/Login';
 
 export interface IUsersController {
   createUser(): Lifecycle.Method | HandlerDecorations;
@@ -13,11 +15,13 @@ export interface IUsersController {
 
 @injectable()
 export class UsersController implements IUsersController {
+  loginManager: Repository<Login>;
 
   constructor(
     @inject(IDENTIFIER.USERS_BUSINESSLOGIC) private usersBL: IUsersBusinessLogic,
+    @inject(IDENTIFIER.MYSQL_CONNECTION) private mysqlConnection: Connection,
   ) {
-
+    this.loginManager = this.mysqlConnection.getRepository(Login);
   }
 
   public createUser() {
@@ -28,6 +32,8 @@ export class UsersController implements IUsersController {
 
   public retrieveUsers() {
     return async (request: Request, h: ResponseToolkit) => {
+      const users = await this.loginManager.find();
+      console.log(users);
       return h.response('Users: Retrieve');
     };
   }

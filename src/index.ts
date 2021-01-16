@@ -8,16 +8,11 @@ import { createHelperContainer } from './helpers/helper.container';
 import { IBootstrapHelper } from './helpers/utilites/bootstrap';
 import { IDENTIFIER } from './helpers/utilites/identifier';
 import { createDBConnection } from './connection';
+import { mysqlEntities } from './models/mysql/mysqlEntities';
 
 const main = async () => {
-  const mainContainer        = new Container();
-  const helperContainer      = createHelperContainer();
-  const applicationContainer = createAppContainerV1();
-
-  mainContainer.bind<Container>(IDENTIFIER.HELPER_CONTAINER)
-    .toConstantValue(helperContainer);
-  mainContainer.bind<Container>(IDENTIFIER.APPLICATION_CONTAINER)
-    .toConstantValue(applicationContainer);
+  const mainContainer   = new Container();
+  const helperContainer = createHelperContainer();
 
   const bootstrapHelper = helperContainer.get<IBootstrapHelper>(IDENTIFIER.BOOTSTRAP_HELPER);
 
@@ -25,12 +20,26 @@ const main = async () => {
   const mysqlConfigFile          = path.resolve(path.join('src', 'config', 'mysql.yml'));
   const mongodbConnectionOptions = await bootstrapHelper.loadDbConnectionConfig(mongodbConfigFile);
   const mysqlConnectionOptions   = await bootstrapHelper.loadDbConnectionConfig(mysqlConfigFile);
-  const mongodbConnection        = await createDBConnection(mongodbConnectionOptions);
-  const mysqlConnection          = await createDBConnection(mysqlConnectionOptions);
+  // const mongodbConnection        = await createDBConnection(mongodbConnectionOptions);
+  const mysqlConnection          = await createDBConnection({
+    ...mysqlConnectionOptions,
+    entities: mysqlEntities
+  });
 
-  applicationContainer.bind(IDENTIFIER.MONGO_CONNECTION).toConstantValue(mongodbConnection);
-  applicationContainer.bind(IDENTIFIER.MYSQL_CONNECTION).toConstantValue(mysqlConnection);
-  applicationContainer.bind(IDENTIFIER.HELPER_CONTAINER).toConstantValue(helperContainer);
+  const applicationContainer = createAppContainerV1(
+    helperContainer,
+    // mongodbConnection,
+    mysqlConnection,
+  );
+
+  // applicationContainer.bind(IDENTIFIER.MONGO_CONNECTION).toConstantValue(mongodbConnection);
+  // applicationContainer.bind(IDENTIFIER.MYSQL_CONNECTION).toConstantValue(mysqlConnection);
+  // applicationContainer.bind(IDENTIFIER.HELPER_CONTAINER).toConstantValue(helperContainer);
+
+  mainContainer.bind<Container>(IDENTIFIER.HELPER_CONTAINER)
+    .toConstantValue(helperContainer);
+  mainContainer.bind<Container>(IDENTIFIER.APPLICATION_CONTAINER)
+    .toConstantValue(applicationContainer);
 
   const serverOptions = bootstrapHelper.loadServerConfig();
   const app = new Application(serverOptions);

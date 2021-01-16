@@ -3,9 +3,9 @@ DATABASE:
   TYPE: mysql
   HOST: localhost
   PORT: 3306
-  USERNAME: admin
-  PASSWORD: '123456'
-  DATABASE: ragnarok
+  USERNAME: hercules
+  PASSWORD: password
+  DATABASE: hercules
   CACHE: true
   SYNCHRONIZE: false
   LOGGING: false
