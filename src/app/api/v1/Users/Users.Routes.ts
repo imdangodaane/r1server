@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { IUsersController } from './Users.Controller';
 import { ServerRoute } from '@hapi/hapi';
 import { IDENTIFIER } from '../../../../helpers/utilites/identifier';
+import { createUserRequestSchema } from './Users.Schema';
 
 export interface IUsersRoutes {
   getUsersRoutes(): ServerRoute[];
@@ -11,18 +12,23 @@ export interface IUsersRoutes {
 export class UsersRoutes implements IUsersRoutes {
   #usersRoutes!: ServerRoute[];
 
-  private _createUserRoute() {
+  private _createUserRoute(): ServerRoute {
     return {
       method: 'POST',
-      path: '/v1/users',
+      path: '/api/v1/users',
       handler: this.usersCtrler.createUser(),
+      options: {
+        validate: {
+          payload: createUserRequestSchema,
+        },
+      },
     };
   }
 
   private _retrieveUsersRoute() {
     return {
       method: 'GET',
-      path: '/v1/users',
+      path: '/api/v1/users',
       handler: this.usersCtrler.retrieveUsers(),
     };
   }
@@ -30,7 +36,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _retrieveUserRoute() {
     return {
       method: 'GET',
-      path: '/v1/user/{id}',
+      path: '/api/v1/user/{id}',
       handler: this.usersCtrler.retrieveUser(),
     };
   }
@@ -38,7 +44,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _modifyUserRoute() {
     return {
       method: 'PUT',
-      path: '/v1/user/{id}',
+      path: '/api/v1/user/{id}',
       handler: this.usersCtrler.modifyUser(),
     };
   }
@@ -46,7 +52,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _removeUserRoute() {
     return {
       method: 'DELETE',
-      path: '/v1/user/{id}',
+      path: '/api/v1/user/{id}',
       handler: this.usersCtrler.removeUser(),
     };
   }
