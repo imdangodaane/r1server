@@ -32,6 +32,7 @@
   "dependencies": {
     "@hapi/hapi": "^20.0.2",
     "inversify": "^5.0.1",
+    "joi": "^17.3.0",
     "js-yaml": "^3.14.0",
     "mongodb": "^3.6.3",
     "mysql": "^2.18.1",

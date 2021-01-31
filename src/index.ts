@@ -23,7 +23,7 @@ const main = async () => {
   // const mongodbConnection        = await createDBConnection(mongodbConnectionOptions);
   const mysqlConnection          = await createDBConnection({
     ...mysqlConnectionOptions,
-    entities: mysqlEntities
+    entities: mysqlEntities,
   });
 
   const applicationContainer = createAppContainerV1(

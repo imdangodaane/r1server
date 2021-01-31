@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { IUsersController } from './Users.Controller';
 import { ServerRoute } from '@hapi/hapi';
 import { IDENTIFIER } from '../../../../helpers/utilites/identifier';
+import joi from 'joi';
 
 export interface IUsersRoutes {
   getUsersRoutes(): ServerRoute[];
@@ -11,11 +12,19 @@ export interface IUsersRoutes {
 export class UsersRoutes implements IUsersRoutes {
   #usersRoutes!: ServerRoute[];
 
-  private _createUserRoute() {
+  private _createUserRoute(): ServerRoute {
     return {
       method: 'POST',
       path: '/v1/users',
       handler: this.usersCtrler.createUser(),
+      options: {
+        validate: {
+          payload: joi.object({
+            username: joi.string().min(6).max(64),
+            password: joi.string().min(6).max(64),
+          }),
+        },
+      },
     };
   }
 
