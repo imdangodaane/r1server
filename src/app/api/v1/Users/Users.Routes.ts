@@ -36,7 +36,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _retrieveUserRoute() {
     return {
       method: 'GET',
-      path: '/api/v1/user/{id}',
+      path: '/api/v1/users/{id}',
       handler: this.usersCtrler.retrieveUser(),
     };
   }
@@ -44,7 +44,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _modifyUserRoute() {
     return {
       method: 'PUT',
-      path: '/api/v1/user/{id}',
+      path: '/api/v1/users/{id}',
       handler: this.usersCtrler.modifyUser(),
     };
   }
@@ -52,7 +52,7 @@ export class UsersRoutes implements IUsersRoutes {
   private _removeUserRoute() {
     return {
       method: 'DELETE',
-      path: '/api/v1/user/{id}',
+      path: '/api/v1/users/{id}',
       handler: this.usersCtrler.removeUser(),
     };
   }
