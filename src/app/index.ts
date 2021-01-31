@@ -5,7 +5,12 @@ export class Application {
   #serverRoutes: hapi.ServerRoute[] = [];
 
   private _createServer(serverOptions: hapi.ServerOptions): hapi.Server {
-    const server = hapi.server(serverOptions);
+    const server = hapi.server({
+      ...serverOptions,
+      routes: {
+        cors: true,
+      },
+    });
     return server;
   }
 
