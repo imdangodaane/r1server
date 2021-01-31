@@ -15,5 +15,6 @@ export enum IDENTIFIER {
 
   USERS_ROUTES = 'IUsersRoutes',
   USERS_CONTROLLER = 'IUsersController',
-  USERS_BUSINESSLOGIC = 'IUsersBusinessLogc',
+  USERS_BUSINESSLOGIC = 'IUsersBusinessLogic',
+  USERS_DATAACCESS = 'IUsersDataAccess',
 }

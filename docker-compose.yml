@@ -11,9 +11,9 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: 123456
-      MYSQL_DATABASE: ragnarok
-      MYSQL_ROOT_PASSWORD: ragnarok
+      MYSQL_USER: hercules
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: hercules
+      MYSQL_ROOT_PASSWORD: password
     ports:
       - 3306:3306
